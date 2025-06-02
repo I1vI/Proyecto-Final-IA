@@ -73,7 +73,7 @@ proyecto-desercion/
 ## 🚀 Instrucciones para ejecutar el proyecto
 
 ```bash
-# 1. Clonar el repositorio
+# 1. Clonar el repositorio o descargar el ZIP
 git clone https://github.com/I1vI/Proyecto-Final-IA.git
 cd Proyecto-Final-IA
 
