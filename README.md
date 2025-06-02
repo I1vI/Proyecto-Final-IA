@@ -93,25 +93,3 @@ pip install -r requirements.txt
 python main.py
 
 ```
-
-## 🚀 Instrucciones para ejecutar el proyecto
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/I1vI/Proyecto-Final-IA.git
-
-# 2. Crear y activar entorno virtual
-
-# En Windows:
-python -m venv venv
-venv\Scripts\activate
-
-# En macOS / Linux:
-python3 -m venv venv
-source venv/bin/activate
-
-# 3. Instalar dependencias
-pip install -r requirements.txt
-
-# 4. Ejecutar el proyecto
-python main.py
