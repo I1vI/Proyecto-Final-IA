@@ -55,35 +55,3 @@ def evaluar_modelo(modelo, X_test, y_test):
     print("====== MATRIZ DE CONFUSIÓN ======")
     conf_matrix = confusion_matrix(y_test, y_pred)
     print(conf_matrix)
-
-
-def evaluar_modelo_iteraciones(modelo, X_test, y_test,iteracion):
-    """
-    Evalúa el modelo varias veces con un split
-    """
-
-    y_pred = modelo.predict(X_test)
-
-    # Accuracy = (número de predicciones correctas) / (número total de ejemplos)
-    accuracy = accuracy_score(y_test, y_pred)
-    # Precision = promedio de [TP / (TP + FP)]
-    precision = precision_score(y_test, y_pred, average='macro')
-    # Recall = promedio de [TP / (TP + FN)]
-    recall = recall_score(y_test, y_pred, average='macro')
-    # F1-score = promedio de [2 * (Precision * Recall) / (Precision + Recall)]
-    f1 = f1_score(y_test, y_pred, average='macro')
-
-    print("====== MÉTRICAS DEL MODELO ======")
-    print(f"Accuracy:  {accuracy:.4f}")
-    print(f"Precision: {precision:.4f}")
-    print(f"Recall:    {recall:.4f}")
-    print(f"F1-score:  {f1:.4f}")
-
-    # Reporte por clase
-    print("\n====== REPORTE DE CLASIFICACIÓN ======")
-    print(classification_report(y_test, y_pred, target_names=["Dropout", "Enrolled", "Graduate"]))
-
-    # Matriz de confusión
-    print("====== MATRIZ DE CONFUSIÓN ======")
-    conf_matrix = confusion_matrix(y_test, y_pred)
-    print(conf_matrix)
