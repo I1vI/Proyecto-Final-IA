@@ -39,7 +39,7 @@ Con esta información se busca apoyar la toma de decisiones institucionales y re
 
 ## 🛠️ Tecnologías Utilizadas
 
-- Python 3.x  
+- Python 3.13 
 - Pandas, NumPy  
 - Scikit-learn  
 - Matplotlib, Seaborn  
@@ -58,9 +58,6 @@ proyecto-desercion/
 │
 ├── src/                   # Módulos de código (preprocesamiento, modelos, etc.)
 │   └── preprocesamiento.py
-│
-├── resultados/            # Gráficos, métricas, CSVs generados
-│   └── matriz_confusion.png
 │
 ├── docs/                  # Artículos académicos (PDFs)
 │   └── articulo_1.pdf
