@@ -2,11 +2,14 @@ import numpy as np
 from src._1_carga_datos import cargar_datos
 from src._2_A_preprocesamiento_de_datos import (
     media_datos,
+    media_datos_manual,
     label_encoder,
+    label_encoder_manual,
     normalizar_datos,
     balanceo_duplicando,
     balanceo_eliminando,
-    cuenta_clases
+    cuenta_clases,
+    estandarizar_datos
 )
 from src._2_C_ejecucion_del_modelo import (
     particionar_datos,
@@ -23,10 +26,6 @@ from src._3_A_B_pca import(
     explicar_varianza
 )
 from src._4_aprendizaje_no_supervisado import clustering
-
-
-
-
 
 
 #================================================================
@@ -51,15 +50,21 @@ y = datos['Target']
 #++++++++++++++++++++++++++++++++++++++++
 # INPUTAMOS LOS DATOS (EN X) CON LA MEDIA
 x_media = media_datos(x)
+#x_media = media_datos_manual(x)
+
 
 #++++++++++++++++++++++++++++++++++++++++
 # USAMOS LABEL ENCODER PARA EL CASO DEL TARGET, HAY 3 TIPOS (dropout, enrolled, graduate)
 y_label_encoder, clases = label_encoder(y)
 clases = clases.classes_
+#y_label_encoder, clases = label_encoder_manual(y)
+
 
 #++++++++++++++++++++++++++++++++++++++++
 # NORMALIZAMOS LOS DATOS (EN X)
-x_normalizado= normalizar_datos(x_media)
+x_normalizado = normalizar_datos(x_media)
+#x_normalizado = estandarizar_datos(x_media)
+
 
 #++++++++++++++++++++++++++++++++++++++++
 # BALANCEO DE DATOS (2 tipos)
@@ -68,7 +73,8 @@ x_balanceado, y_balanceado = balanceo_duplicando(x_normalizado, y_label_encoder)
 #x_balanceado, y_balanceado = balanceo_eliminando(x_normalizado, y_label_encoder)
 #cuenta_clases(y_balanceado,clases)
 
-print("✅ Se termino con el preprocesamiento.")
+print("Se termino con el preprocesamiento.")
+
 
 
 #================================================================
@@ -81,7 +87,7 @@ x_train, x_test, y_train, y_test = particionar_datos(x_balanceado, y_balanceado,
 modelo = entrenar_modelo(x_train, y_train)
 evaluar_modelo(modelo, x_test, y_test)
 
-print("✅ Se termino la primera Ejecución del Modelo.")
+print("Se termino la primera Ejecución del Modelo.")
 
 #================================================================
 #            d) VALIDACION POR ASIGNACIONES (SPLITS)
@@ -104,7 +110,7 @@ for i in range(2):
     recalls.append(rec)
     f1_scores.append(f1)
 
-print("\n✅ Validación por Asignaciones (80/20) completada con 100 splits.")
+print("\nValidación por Asignaciones (80/20) completada con 100 splits.")
 print(f"Mediana Accuracy : {np.median(accuracies):.4f}")
 print(f"Mediana Precision: {np.median(precisions):.4f}")
 print(f"Mediana Recall   : {np.median(recalls):.4f}")
@@ -123,19 +129,24 @@ for i in range(2):
     recalls.append(rec)
     f1_scores.append(f1)
 
-print("\n✅ Validación por Asignaciones (50/50) completada con 100 splits.")
+print("\nValidación por Asignaciones (50/50) completada con 100 splits.")
 print(f"Mediana Accuracy : {np.median(accuracies):.4f}")
 print(f"Mediana Precision: {np.median(precisions):.4f}")
 print(f"Mediana Recall   : {np.median(recalls):.4f}")
 print(f"Mediana F1-score : {np.median(f1_scores):.4f}")
 
-print("✅ Se termino la validación por asignaciones (Splits).")
+print("Se termino la validación por asignaciones (Splits).")
+
+
+
 
 #================================================================
 #================================================================
 #             3 Reducción de Dimensionalidad con PCA
 #================================================================
 #================================================================
+x_normalizado = estandarizar_datos(x_media)
+x_balanceado, y_balanceado = balanceo_duplicando(x_normalizado, y_label_encoder)
 
 
 #================================================================
@@ -147,7 +158,6 @@ var_exp, var_exp_acum = explicar_varianza(pca_obj)
 print(x_pca)
 print("Varianza explicada por componente:", var_exp)
 print("Varianza explicada acumulada:", var_exp_acum)
-
 
 
 #================================================================
@@ -164,7 +174,7 @@ for n_comp in componentes_a_probar:
     precisions = []
     recalls = []
     f1_scores = []
-    for i in range(2):
+    for i in range(50):
         x_train, x_test, y_train, y_test = particionar_datos_split(x_pca, y_balanceado, porcentaje=0.8)
         modelo = entrenar_modelo_split(x_train, y_train)
         acc, prec, rec, f1 = evaluar_modelo_split(modelo, x_test, y_test)
@@ -193,6 +203,7 @@ print(f"Mediana Accuracy : {mejor_resultado['accuracy']:.4f}")
 print(f"Mediana Precision: {mejor_resultado['precision']:.4f}")
 print(f"Mediana Recall   : {mejor_resultado['recall']:.4f}")
 print(f"Mediana F1-score : {mejor_resultado['f1']:.4f}")
+
 
 
 #================================================================
