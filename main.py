@@ -148,7 +148,6 @@ print("Se termino la validación por asignaciones (Splits).")
 x_normalizado = estandarizar_datos(x_media)
 x_balanceado, y_balanceado = balanceo_duplicando(x_normalizado, y_label_encoder)
 
-
 #================================================================
 #            a) Análisis de Componentes Principales (PCA)
 #================================================================
